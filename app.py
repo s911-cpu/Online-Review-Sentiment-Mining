@@ -4,7 +4,6 @@ import re
 import nltk
 from nltk.corpus import stopwords
 
-# Download stopwords if needed
 nltk.download("stopwords", quiet=True)
 
 # Load saved model and TF-IDF vectorizer
@@ -12,9 +11,7 @@ lr_final = joblib.load("lr_final.pkl")
 tfidf_final = joblib.load("tfidf_final.pkl")
 
 
-# -----------------------------
 # Text preprocessing
-# -----------------------------
 
 def clean_text(text):
     text = text.lower()
@@ -30,10 +27,8 @@ def remove_stopwords(text):
     words = text.split()
     return " ".join(word for word in words if word not in stop_words)
 
-
-# -----------------------------
 # Final hybrid prediction
-# -----------------------------
+
 
 def predict_sentiment_final(review):
     text = review.lower().strip()
@@ -83,9 +78,8 @@ def predict_sentiment_final(review):
     return lr_final.predict(review_tfidf)[0]
 
 
-# -----------------------------
 # Rating → sentiment
-# -----------------------------
+
 
 def rating_to_sentiment(rating):
     if rating <= 2:
@@ -95,10 +89,8 @@ def rating_to_sentiment(rating):
     else:
         return "Positive"
 
-
-# -----------------------------
 # Page configuration
-# -----------------------------
+
 
 st.set_page_config(
     page_title="Online Review & Sentiment Mining",
@@ -106,10 +98,8 @@ st.set_page_config(
     layout="centered"
 )
 
-
-# -----------------------------
 # Minimal UI styling
-# -----------------------------
+
 
 st.markdown("""
 <style>
@@ -148,17 +138,14 @@ h1 {
 </style>
 """, unsafe_allow_html=True)
 
-
-# -----------------------------
 # App title
-# -----------------------------
+
 
 st.title("Online Review & Sentiment Mining")
 
 
-# -----------------------------
 # Review input
-# -----------------------------
+
 
 st.markdown("### How do you feel about the product/service?")
 
@@ -168,10 +155,7 @@ review = st.text_area(
     height=120
 )
 
-
-# -----------------------------
 # Rating
-# -----------------------------
 
 st.markdown(
     '<div class="rating-label">Rating</div>',
@@ -180,10 +164,7 @@ st.markdown(
 
 rating = st.feedback("stars")
 
-
-# -----------------------------
 # Submit
-# -----------------------------
 
 if st.button("Submit", use_container_width=True):
 
